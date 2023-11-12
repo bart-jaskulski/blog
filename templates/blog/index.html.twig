@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello PostsController!{% endblock %}
+
+{% block body %}
+<div>
+    <h1>True mouseless dev environment with modern tooling</h1>
+    {% if 'Lynx' in app.request.headers.get('User-Agent') %}
+      <p>You're witty enough to read this with Lynx! Points for you!</p>
+    {% endif %}
+
+    View all posts:
+    <ul>
+    {% for article in articles %}
+        <li>
+          <a href="{{ path('app_article_show', {'id': article.id}) }}">{{ article.title }}</a>
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}
