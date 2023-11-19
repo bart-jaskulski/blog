@@ -23,26 +23,22 @@ class ArticleController extends AbstractController
     }
 
     #[Route('/new', name: 'app_article_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
-    {
+    public function new(Request $request, EntityManagerInterface $entityManager): Response {
         $article = new Article();
+        $article->setCreated(new \DateTime());
         $form = $this->createForm(ArticleType::class, $article);
-        $form->handleRequest($request);
 
+        $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->persist($article);
             $entityManager->flush();
 
-      $this->addFlash(
-        'success',
-        'The article was created successfully.'
-      );
+            $this->addFlash('success', 'Article created!');
 
-            return $this->redirectToRoute('app_article_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_article_show', ['id' => $article->getId()], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('article/new.html.twig', [
-            'article' => $article,
             'form' => $form,
         ]);
     }
