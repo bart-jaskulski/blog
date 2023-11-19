@@ -1,0 +1,5 @@
+.flashes:has([class^="flash"]) {
+  background-color: #e5e5e5;
+  border-radius: 4px;
+  padding: 4px 8px;
+}
